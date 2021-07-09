@@ -296,6 +296,7 @@ void ReplaceFit()
                 fitdiff = fitdiff + fabs(V[t][d][h]-W[t][0][d][h]);
 
                 Wnext[t][maxTs - 1][d][h] = W[t][0][d][h];
+                hormone[t][maxTs - 1][d] = hormone[t][0][d];
 
                 V[t][d][h] = W[t][0][d][h];
             }
