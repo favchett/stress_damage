@@ -184,7 +184,7 @@ void Reproduction()
   { 
     for (d=0;d<=maxD;++d)
     {
-        repro[ts][d] = ts == maxTs - 1 ? std::max(0.0, 1.0 - Kfec*double(d)) : 0.0;
+        repro[ts][d] = (ts % (maxTs - 1)) == 0 ? std::max(0.0, 1.0 - Kfec*double(d)) : 0.0;
 
         if (maxTs - 1)
         {
@@ -205,7 +205,7 @@ void OptDec()
     // go from maxTs down to 0
     // start from maxTs - 2, as we need to reach back
     // to array positions given by ts + 1
-    for (ts = maxTs - 1; ts >= 0; --ts)
+    for (ts = maxTs - 2; ts >= 0; --ts)
     {
       // calculate optimal decision h given current t, ts and d (N.B. t=0 if survived attack)
       // where h in t, ts, and d is unimodal
@@ -226,8 +226,8 @@ void OptDec()
                   //    maxTs - 2 + 1 = maxTs - 1 (i.e., end of array)
                   //    0 + 1 = 1 (i.e., one off start of array
                   //    Wnext[ts = 0] will not be accessed
-                fitness_x1 = Wnext[std::min(maxT-1,t+1)][(ts + 1) % maxTs][d][x1];
-                fitness_x2 = Wnext[std::min(maxT-1,t+1)][(ts + 1) % maxTs][d][x2]; // fitness as a function of h=x2
+                fitness_x1 = Wnext[std::min(maxT-1,t+1)][ts + 1][d][x1];
+                fitness_x2 = Wnext[std::min(maxT-1,t+1)][ts + 1][d][x2]; // fitness as a function of h=x2
     
                 if (fitness_x1 < fitness_x2)
                 {
