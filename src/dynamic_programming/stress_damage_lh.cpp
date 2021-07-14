@@ -428,7 +428,7 @@ void fwdCalc()
                 F[t][0][d][h] = F[t][maxTs][d][h]; // frequencies at time ts = maxTs become frequencies at time ts = 0 (next breeding cycle)
                 for (ts = 1;ts<=maxTs;ts++)
 		{
-		  Fnext[t][ts][d][h] = 0.0; // wipe frequencies for ts > 0 in next breeding cycle
+		  F[t][ts][d][h] = 0.0; // wipe frequencies for ts > 0 in next breeding cycle
 		} // end for ts
               } // end for h
             } // end for d
