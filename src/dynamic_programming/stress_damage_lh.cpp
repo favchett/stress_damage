@@ -34,7 +34,10 @@ double alpha    = 1.0;     // parameter controlling effect of hormone level on p
 //const double beta     = 1.5;     // parameter controlling effect of hormone level on reproductive rate
 const double mu0      = 0.002;   // background mortality (independent of hormone level and predation risk)
 const double phi_inv  = 1.0/((sqrt(5.0)+1.0)/2.0); // inverse of golden ratio (for golden section search)
+const double hmin     = 0.3;     // level of hormone that minimises damage
+const double hslope   = 20.0;     // slope parameter controlling increase in damage with deviation from hmin
 const int maxD        = 20;      // maximum damage level
+const int repair      = 1;      // damage units removed per time step
 double Kmort        = 0.0;    // parameter Kmort controlling increase in mortality with damage level
 double Kfec        = 0.05;    // parameter Kmort controlling increase in mortality with damage level
 const int maxI        = 1000000; // maximum number of iterations
@@ -164,7 +167,7 @@ void Damage()
   {
     for (h=0;h<=maxH;++h)
     {
-      dnew[d][h] = std::max(0.0,std::min(double(maxD),double(d) + 4.0*(double(h)/double(maxH))*(double(h)/double(maxH))-1.0));
+      dnew[d][h] = std::max(0.0,std::min(double(maxD),double(d) + hslope*(hmin-(double(h)/double(maxH)))*(hmin-(double(h)/double(maxH))) - double(repair)));
     }
   }
 } // void Damage()
@@ -345,7 +348,10 @@ void PrintParams()
        << "maxT: " << "\t" << maxT << std::endl
        << "maxTs: " << "\t" << maxTs << std::endl
        << "maxD: " << "\t" << maxD << std::endl
-       << "maxH: " << "\t" << maxH << std::endl;
+       << "maxH: " << "\t" << maxH << std::endl
+       << "hmin: " << "\t" << hmin << std::endl
+       << "hslope: " << "\t" << hslope << std::endl
+       << "repair: " << "\t" << repair << std::endl;
 }
 
 
